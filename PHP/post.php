@@ -37,7 +37,7 @@ function auth_str($length = 10) {
     return $randomString . time();
 }
 function create_code($sImage, $sOutput) {
-	$hImage = imagecreatefromjpeg($sImage);
+	$hImage = new imagick($sImage);
 	$ImageSize = getimagesize($sImage);
 	$iWidth = $ImageSize[0];
 	$iHeight= $ImageSize[1];
@@ -53,9 +53,9 @@ function create_code($sImage, $sOutput) {
 	For ($x = 0; $x< $iWidth; $x++) {
 		fwrite($hFile, ".Range('" . num2alpha($x) . ($y+1) . ":" . num2alpha($x) . ($y + 1) . "').Columns.ColumnWidth = 2".PHP_EOL);
 		For ($y = 0; $y< $iHeight; $y++) {
-			$rgb = imagecolorat($hImage, $x, $y);
-			$color = dechex($rgb);
-			$color = substr($color, 4, 2) . substr($color, 2, 2).substr($color, 0, 2);
+			$pixel = $hImage->getimagepixelcolor($x, $y);
+	        $color = $pixel->getColor();
+			$color = sprintf("%02x%02x%02x", $color['b'], $color['g'], $color['r']);
 			fwrite($hFile, ".Range('" . num2alpha($x) . ($y+1) . ":" . num2alpha($x) . ($y + 1) . "').Interior.Color = 0x" . $color. PHP_EOL);
 		}
 	}
