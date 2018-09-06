@@ -52,8 +52,7 @@ While 1
 			$done = 0
 			For $x = 1 to $iWidth
 				For $y = 1 to $iHeight
-					$pure_color = string(Hex(_GDIPlus_BitmapGetPixel($hImage, $x, $y), 6))
-					$col = "0x" & StringMid($pure_color, 4, 6) & StringMid($pure_color, 2, 2)  & StringMid($pure_color, 1, 2)
+					$col = _ColorConvert("0x" & string(Hex(_GDIPlus_BitmapGetPixel($hImage, $x, $y), 6)))
 					if $old_name <> Test_Name($x) Then
 						FileWriteLine($fh, ".Range('" & Test_Name($x) & $y & ":" & Test_Name($x) & $y & "').Columns.ColumnWidth = 2")
 						$old_name = Test_Name($x)
@@ -73,6 +72,12 @@ While 1
 			EndIf
 	EndSwitch
 WEnd
+
+Func _ColorConvert($nColor);RGB to BGR or BGR to RGB
+    Return Hex( _
+        BitOR(BitShift(BitAND($nColor, 0x000000FF), -16), _
+        BitAND($nColor, 0x0000FF00), _
+        BitShi
 
 Func Test_Name($i)
 	$dividend = $i;
