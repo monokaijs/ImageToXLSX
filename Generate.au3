@@ -77,7 +77,8 @@ Func _ColorConvert($nColor);RGB to BGR or BGR to RGB
     Return Hex( _
         BitOR(BitShift(BitAND($nColor, 0x000000FF), -16), _
         BitAND($nColor, 0x0000FF00), _
-        BitShi
+        BitShift(BitAND($nColor, 0x00FF0000), 16)), 6)
+EndFunc
 
 Func Test_Name($i)
 	$dividend = $i;
