@@ -52,7 +52,8 @@ While 1
 			$done = 0
 			For $x = 1 to $iWidth
 				For $y = 1 to $iHeight
-					$col = "0x" & string(Hex(_GDIPlus_BitmapGetPixel($hImage, $x, $y), 6))
+					$pure_color = string(Hex(_GDIPlus_BitmapGetPixel($hImage, $x, $y), 6))
+					$col = "0x" & StringMid($pure_color, 4, 6) & StringMid($pure_color, 2, 2)  & StringMid($pure_color, 1, 2)
 					if $old_name <> Test_Name($x) Then
 						FileWriteLine($fh, ".Range('" & Test_Name($x) & $y & ":" & Test_Name($x) & $y & "').Columns.ColumnWidth = 2")
 						$old_name = Test_Name($x)
