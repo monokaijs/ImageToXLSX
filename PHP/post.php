@@ -1,4 +1,5 @@
 <?php
+set_time_limit (180);
 $target_dir = "images/";
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($_FILES['fileToUpload']['name'],PATHINFO_EXTENSION));
